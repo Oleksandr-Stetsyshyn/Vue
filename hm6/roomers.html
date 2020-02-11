@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+    td,
+    tr,
+    table {
+        border: 1px solid black;
+    }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>
+            ПІБ студента
+            <input type="text" v-model="nameMember">
+        </div>
+        <div>
+            Кімната
+            <select v-model="roomNumbers">
+                <option v-for="(room, index) in rooms" :key=index :value=room >{{ room }}</option>
+            </select><br>
+            <button @click="addTenant(index)">Додати</button>
+        </div><hr>
+        <div>
+            Пошук<br>
+            ПІБ <input type="text">
+            Кімната <input type="text"><br>
+        </div><hr>
+        <div>
+            Список жильців гуртожитку
+            <table>
+                <tr>
+                    <td><b>ПІБ</b></td>
+                    <td><b>Кімната</b></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div v-for="(tenant, index) in tenants" :key="index">
+                            {{ tenant.student }}
+                        </div>
+                    </td>
+                    <td>
+                        <div v-for="(tenant, index) in tenants" :key="index">
+                            {{ tenant.room }}
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+      <script>
+      var app = new Vue({
+        el: '#app',
+        data: {
+            rooms: ['10a','10b','11a','11b','12a','12b',],
+            nameMember: null,
+            roomNumbers: null,
+            tenants: [
+                {
+                    student: 'Petrov I.I.',
+                    room: '10c'
+                }
+            ]
+        },
+        methods: {
+            addTenant(index){
+                const newNumber = this.roomNumbers
+                this.tenants.push(
+                    {
+                        student: this.nameMember,
+                        room: newNumber
+                    },
+                this.rooms.splice(index, 1)
+                )
+            },
+        }
+      })
+    </script>
+</body>
+</html>
